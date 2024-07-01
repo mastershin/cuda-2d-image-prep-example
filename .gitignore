@@ -1,0 +1,6 @@
+*.jpg
+*.png
+*.exe
+bin/
+data/images/
+build/
