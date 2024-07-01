@@ -1,6 +1,6 @@
 # Image Processor with NVIDIA NPP and OpenCV
 
-This project is a simple C++ program that parses command line arguments to set an input directory and an output directory. It loads all image files from the input directory using OpenCV, calculates the mean RGB values using NVIDIA NPP, resizes the images to 32x32 pixels, subtracts the mean RGB values, and saves the processed images to the output directory with a `.png` extension.
+This project is a simple C++ program that parses command line arguments to set an input directory and an output directory. It loads all image files from the input directory using OpenCV, calculates the mean RGB values using NVIDIA NPP, resizes the images to 32x32 pixels, and saves the processed images to the output directory with a `.png` extension.
 
 ## Prerequisites
 
@@ -65,7 +65,7 @@ g++ -std=c++17 -I$(pkg-config --cflags opencv4) -L$(pkg-config --libs opencv4) -
 ./bin/image_processor --directory ./data/images/
 ```
 
-### Calculate RGB Means, and process all the images by subtracting the mean, and save to output
+### Calculate RGB Means, and process all the images by resizing with width x height, and save to output
 ```
 ./bin/image_processor --directory ./data/images/ --output ./output/ --width 32 --height 32
 ```

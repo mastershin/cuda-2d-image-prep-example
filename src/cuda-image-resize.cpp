@@ -120,10 +120,12 @@ void calculateMeanRGB(const std::vector<cv::Mat> &images, cv::Vec3f &meanRGB) {
     sumG += pSum[1];
     sumB += pSum[2];
 
+    /*
     std::cout << "Image: " << img.rows << "x" << img.cols
               << ", Mean RGB: R=" << (pSum[0] / pixels)
               << ", G=" << pSum[1] / pixels << ", B=" << pSum[2] / pixels << " "
               << img.at<cv::Vec3b>(50, 50) << std::endl;
+    */
 
     // Free device memory
     // nppiFree(d_img);
@@ -141,7 +143,7 @@ void calculateMeanRGB(const std::vector<cv::Mat> &images, cv::Vec3f &meanRGB) {
   meanRGB[2] = static_cast<float>(sumB / totalPixels);
 }
 
-// Function to process images: resize, subtract mean, and save
+// Function to process images: resize, and save
 void processImages(const std::vector<cv::Mat> &images,
                    const std::vector<std::string> &filenames,
                    const std::string &outputDir, int width, int height,
@@ -150,10 +152,14 @@ void processImages(const std::vector<cv::Mat> &images,
     cv::Mat resizedImg, finalImg;
     cv::resize(images[i], resizedImg, cv::Size(width, height));
 
-    // Subtract mean values
     resizedImg.convertTo(finalImg, CV_32FC3);
 
-    finalImg -= cv::Scalar(meanRGB[2], meanRGB[1], meanRGB[0]);
+    // due to original rgb values being unsigned char, let's not subtract here.
+    // TODO: Probably we want to convert to floating point, and subtract
+    // the mean, and save as floating rgb values,
+    // but, let's leave the original rgb values as it, since we're going to
+    // save back as png file.
+    // finalImg -= cv::Scalar(meanRGB[2], meanRGB[1], meanRGB[0]);
 
     // Convert back to 8-bit image
     finalImg.convertTo(finalImg, CV_8UC3);
